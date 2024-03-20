@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather-App</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="left-info"
+            {% if exception_occurred %}
+            style="background: url(../images/1.jpg);"
+            {% else %}
+            style="background: url('{{ image_url }}'); background-size: cover; background-position: center;"
+            {% endif %}
+        >
+            <div class="pic-gradient"></div>
+
+            <div class="today-info">
+                <h2>{{ today }}</h2>
+                <span>{{ day }}</span>
+                <i class="bx bx-current-location"> <span>{{ city }}</span></i>
+            </div>  
+
+            <div class="today-weather">
+                <img class="bx" src="http://openweathermap.org/img/wn/{{ icon }}.png" width="50px">
+                <!-- <i class="bx bx-sun"></i> -->
+                <h1 class="weather-temp">
+                    {{ temp }}
+                    <h3>{{ description }}</h3>
+                </h1>
+            </div>
+
+        </div>
+
+        <div class="right-info">
+            <div class="day-info">
+                <div>
+                    <span class="title">PRESSURE</span>
+                    <span class="value">{{ pressure }} %</span>
+                </div>
+
+                <div>
+                    <span class="title">HUMIDITY</span>
+                    <span class="value">{{ humidity }} %</span>
+                </div>
+                
+                <div>
+                    <span class="title">WIND SPEED</span>
+                    <span class="value">{{ windspeed }} m/s</span>
+                </div>    
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="city" placeholder="Enter City">
+                <button type="submit" class="loc-button">Search Location</button>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>
+
